@@ -1,0 +1,18 @@
+<!-- PAPEL -->
+{% extends "base.html" %}
+{% block title %}Papel - BIOMA{% endblock %}
+{% block content %}
+  <header class="subheader">
+    <h1>Reciclaje de Papel</h1>
+    <p>Consejos para reutilizar el papel y fomentar el reciclaje desde casa.</p>
+    <img src="{{ url_for('static', filename='images/papel.jpg') }}" alt="Papel reciclado" class="contenido-img">
+  </header>
+  <section class="contenido">
+    <ul>
+      <li>📄 Evita mojar el papel reciclable.</li>
+      <li>♻️ Reutiliza hojas impresas por un solo lado.</li>
+      <li>📚 Recoge y separa papel de cuadernos, revistas y cajas.</li>
+    </ul>
+    <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+  </section>
+{% endblock %}

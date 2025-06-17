@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - BIOMA</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #a8e6cf, #dcedc1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    .toggle-link {
+      margin-top: 15px;
+      display: block;
+      color: #00796b;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .flash-message {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .flash-message.error {
+      background-color: #ffcdd2;
+      color: #b71c1c;
+    }
+
+    .flash-message.success {
+      background-color: #c8e6c9;
+      color: #1b5e20;
+    }
+  </style>
+</head>
+
+<body class="{% if get_flashed_messages(with_categories=true)|selectattr('0', 'equalto', 'success')|list %}registro-exitoso{% endif %}">
+
+  <div class="login-container">
+    <!-- Mensajes Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Formulario de login -->
+    <div id="login-form">
+      <h2>Iniciar Sesión</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <input type="text" name="username" placeholder="Usuario" required />
+        <input type="password" name="password" placeholder="Contraseña" required />
+        <button type="submit">Entrar</button>
+      </form>
+      <span class="toggle-link" onclick="toggleForms()">¿No tienes cuenta? Regístrate</span>
+    </div>
+
+    <!-- Formulario de registro -->
+    <div id="register-form" style="display: none;">
+      <h2>Crear Cuenta</h2>
+      <form method="POST" action="{{ url_for('register') }}">
+        <input type="text" name="username" placeholder="Usuario" required />
+        <input type="password" name="password" placeholder="Contraseña" required />
+        <input type="email" name="correo" placeholder="Correo electrónico" required />
+        <button type="submit">Registrarse</button>
+      </form>
+      <span class="toggle-link" onclick="toggleForms()">¿Ya tienes cuenta? Inicia sesión</span>
+    </div>
+  </div>
+
+  <script>
+    function toggleForms() {
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      loginForm.style.display = loginForm.style.display === "none" ? "block" : "none";
+      registerForm.style.display = registerForm.style.display === "none" ? "block" : "none";
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (document.body.classList.contains('registro-exitoso')) {
+        document.getElementById('register-form').style.display = 'none';
+        document.getElementById('login-form').style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

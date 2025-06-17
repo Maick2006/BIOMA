@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - BIOMA{% endblock %}
+
+{% block content %}
+  <header>
+    <h1>BIOMA</h1>
+    <p>Incentivamos el reciclaje para cuidar nuestro planeta 🌍</p>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Cerrar sesión</a>
+  </header>
+
+  <section class="servicios">
+  <div class="servicio">
+    <h2>Reciclaje de Plástico</h2>
+    <p>Aprende cómo separar y reciclar plásticos correctamente.</p>
+    <a href="{{ url_for('plastico') }}">Ver más</a>
+  </div>
+
+  <div class="servicio">
+    <h2>Reciclaje de Papel</h2>
+    <p>Tips para reutilizar y reciclar papel en casa.</p>
+    <a href="{{ url_for('papel') }}">Ver más</a>
+  </div>
+
+  <div class="servicio">
+    <h2>Reciclaje de Cartón</h2>
+    <p>Consejos para reciclar cartón de forma responsable y efectiva.</p>
+    <a href="{{ url_for('carton') }}">Ver más</a>
+  </div>
+
+  <div class="servicio">
+    <h2>Puntos de Reciclaje</h2>
+    <p>Ubica los centros de reciclaje más cercanos a ti.</p>
+    <a href="{{ url_for('puntos') }}">Ver más</a>
+  </div>
+
+  <div class="servicio">
+    <h2>Eco-Tips</h2>
+    <p>Consejos diarios para reducir tu huella ecológica.</p>
+    <a href="{{ url_for('ecotips') }}">Ver más</a>
+  </div>
+
+  <div class="servicio">
+    <h2>Recompensas</h2>
+    <p>Descubre cómo recibir beneficios por reciclar.</p>
+    <a href="{{ url_for('recompensas') }}">Ver más</a>
+  </div>
+</section>
+
+  <footer>
+    <p>© 2025 BIOMA - Juntos por un mundo más limpio</p>
+  </footer>
+{% endblock %}

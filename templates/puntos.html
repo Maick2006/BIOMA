@@ -1,0 +1,21 @@
+<!-- PUNTOS DE RECICLAJE -->
+{% extends "base.html" %}
+{% block title %}Puntos de Reciclaje - BIOMA{% endblock %}
+{% block content %}
+  <header class="subheader">
+    <h1>Puntos de Reciclaje</h1>
+    <p>Ubica los centros de reciclaje más cercanos a tu localidad.</p>
+    <img src="{{ url_for('static', filename='images/puntos.jpg') }}" alt="Punto de reciclaje" class="contenido-img">
+  </header>
+  <section class="contenido">
+    <ul>
+      <li>📍 Movistar Arena - Calle 63 con Carrera 28, Teusaquillo</li>
+      <li>📍 EcoPunto - Calle 13 #45-67, Fontibón</li>
+      <li>📍 EcoNel - Autopistasur #54A-07, Venecia</li>
+      <li>📍 EcoAmbientales - Calle 161 #8g-89, San Cristóbal</li>
+      <li>📍 ARPPA - Calle 139 #96A-04, Suba</li>
+      <li>📍 Éxito - Cra 13 #52-31, Bogotá</li>
+    </ul>
+    <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+  </section>
+{% endblock %}

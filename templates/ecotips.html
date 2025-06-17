@@ -1,0 +1,19 @@
+<!-- ECOTIPS -->
+{% extends "base.html" %}
+{% block title %}Eco-Tips - BIOMA{% endblock %}
+{% block content %}
+  <header class="subheader">
+    <h1>Eco-Tips</h1>
+    <p>Consejos fáciles para una vida más ecológica y responsable.</p>
+    <img src="{{ url_for('static', filename='images/ecotips.jpg') }}" alt="Consejos ecológicos" class="contenido-img">
+  </header>
+  <section class="contenido">
+    <ul>
+      <li>💡 Apaga luces y dispositivos cuando no los uses.</li>
+      <li>🚿 Reduce el tiempo de tus duchas para ahorrar agua.</li>
+      <li>🛒 Compra productos locales para reducir emisiones.</li>
+      <li>👜 Utiliza bolsas reutilizables al hacer compras.</li>
+    </ul>
+    <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+  </section>
+{% endblock %}
