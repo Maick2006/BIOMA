@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Editar Recompensa{% endblock %}
+{% block content %}
+
+<h2>✏️ Editar Recompensa</h2>
+
+<form method="POST">
+  <label>ID Clase:</label>
+  <input type="number" name="id_clase" value="{{ recompensa.id_clase }}" required>
+
+  <label>ID Punto:</label>
+  <input type="number" name="id_punto" value="{{ recompensa.id_punto }}" required>
+
+  <label>Descripción:</label>
+  <input type="text" name="descripcion" value="{{ recompensa.descripcion }}" required>
+
+  <label>Estado:</label>
+  <input type="text" name="estado" value="{{ recompensa.estado }}" required>
+
+  <label>Fecha Inicio:</label>
+  <input type="date" name="fecha_inicio" value="{{ recompensa.fecha_inicio }}" required>
+
+  <label>Fecha Final:</label>
+  <input type="date" name="fecha_final" value="{{ recompensa.fecha_final }}" required>
+
+  <label>Cantidad:</label>
+  <input type="number" step="0.01" name="cantidad" value="{{ recompensa.cantidad }}" required>
+
+  <button type="submit">💾 Guardar Cambios</button>
+</form>
+
+<a href="{{ url_for('catalogo') }}">← Volver al Catálogo</a>
+
+{% endblock %}

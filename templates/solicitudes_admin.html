@@ -1,31 +1,43 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}Solicitudes de Administrador{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Solicitudes para ser administrador</h2>
+<div class="contenido">
+  <h2 style="color:#388e3c; text-align:center; margin-bottom: 20px;">Solicitudes para ser Administrador</h2>
 
-    <table class="table table-bordered mt-4">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario in solicitudes %}
-            <tr>
-                <td>{{ usuario.nombre }}</td>
-                <td>{{ usuario.correo }}</td>
-                <td>
-                    <form method="post" action="{{ url_for('aprobar_admin') }}">
-                        <input type="hidden" name="usuario_id" value="{{ usuario.id_usuario }}">
-                        <button type="submit" class="btn btn-success">Aprobar</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
+  {% if solicitudes %}
+    <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+      <thead>
+        <tr style="background-color: #a5d6a7; color: #1b5e20;">
+          <th style="padding: 10px; border: 1px solid #ccc;">ID</th>
+          <th style="padding: 10px; border: 1px solid #ccc;">Nombre</th>
+          <th style="padding: 10px; border: 1px solid #ccc;">Correo</th>
+          <th style="padding: 10px; border: 1px solid #ccc;">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in solicitudes %}
+        <tr>
+          <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.id_usuario }}</td>
+          <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.nombre }}</td>
+          <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.correo }}</td>
+          <td style="padding: 10px; border: 1px solid #ccc;">
+            <form method="post" action="{{ url_for('aprobar_admin') }}">
+              <input type="hidden" name="usuario_id" value="{{ usuario.id_usuario }}">
+              <button type="submit" style="background-color:#4caf50; color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">
+                Aprobar
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
+  {% else %}
+    <p style="text-align:center; color:#555; margin-top:20px;">No hay solicitudes pendientes.</p>
+  {% endif %}
+
+  <a href="{{ url_for('home') }}" class="volver-btn">← Volver al inicio</a>
 </div>
 {% endblock %}
