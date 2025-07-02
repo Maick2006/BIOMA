@@ -9,17 +9,13 @@
 
 <section class="contenido" style="max-width: 600px; margin: auto; padding: 30px; background: #f9f9f9; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
 
-  <!-- Imagen de perfil actual -->
-  {% if user.foto %}
-    <div style="text-align: center; margin-bottom: 20px;">
-      <img src="{{ url_for('static', filename='perfiles/' ~ user.foto) }}" alt="Foto de perfil" class="perfil-imagen">
-    </div>
-  {% else %}
-    <div style="text-align: center; margin-bottom: 20px;">
-      <img src="{{ url_for('static', filename='perfiles/img_avatar.png') }}" alt="Avatar por defecto" class="perfil-imagen">
-    </div>
-  {% endif %}
+  <!-- Imagen de perfil actual (usando imagen por defecto si no hay foto) -->
+  {% set foto_perfil = user.foto if user.foto else 'img_avatar.png' %}
+  <div style="text-align: center; margin-bottom: 20px;">
+    <img src="{{ url_for('static', filename='perfiles/' ~ foto_perfil) }}" alt="Foto de perfil" class="perfil-imagen">
+  </div>
 
+  <!-- Formulario de actualización de datos -->
   <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
     <label for="nombre">Nombre</label>
     <input type="text" name="nombre" value="{{ user.nombre }}" required class="input-field">
@@ -39,15 +35,18 @@
     <button type="submit" class="btn-primary">💾 Guardar Cambios</button>
   </form>
 
+  <!-- Botón para eliminar cuenta -->
   <form method="POST" action="{{ url_for('eliminar_cuenta') }}" style="margin-top: 25px;">
     <button type="submit" onclick="return confirm('¿Estás seguro de eliminar tu cuenta?')" class="btn-danger">🗑 Eliminar Cuenta</button>
   </form>
 
+  <!-- Enlace para volver al inicio -->
   <div style="text-align: center; margin-top: 20px;">
     <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
   </div>
 </section>
 
+<!-- Script para mostrar/ocultar contraseña -->
 <script>
   function togglePassword() {
     const input = document.getElementById('contraseña');
@@ -55,6 +54,7 @@
   }
 </script>
 
+<!-- Estilos personalizados -->
 <style>
   .perfil-imagen {
     width: 120px;
