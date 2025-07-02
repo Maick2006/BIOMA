@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Solicitudes para ser administrador</h2>
+
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in solicitudes %}
+            <tr>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('aprobar_admin') }}">
+                        <input type="hidden" name="usuario_id" value="{{ usuario.id_usuario }}">
+                        <button type="submit" class="btn btn-success">Aprobar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

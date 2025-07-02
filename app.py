@@ -275,6 +275,33 @@ def recompensas():
 def catalogo():
     return render_template('catalogo.html')
 
+# -------------------- Funcionalidad: Solicitar ser administrador --------------------
+@app.route('/solicitar_admin', methods=['POST'])
+@login_required
+def solicitar_admin():
+    cursor.execute("UPDATE Usuario SET solicitud_admin = 1 WHERE nombre = %s", (session['usuario'],))
+    conexion.commit()
+    flash("Has solicitado ser administrador. Espera la aprobación.", "info")
+    return redirect(url_for('perfil'))
+
+@app.route('/solicitudes_admin')
+@login_required
+@solo_admin
+def solicitudes_admin():
+    cursor.execute("SELECT id_usuario, nombre, correo FROM Usuario WHERE solicitud_admin = 1 AND rol = 'Reciclador'")
+    solicitudes = cursor.fetchall()
+    return render_template("solicitudes_admin.html", solicitudes=solicitudes)
+
+@app.route('/aprobar_admin', methods=['POST'])
+@login_required
+@solo_admin
+def aprobar_admin():
+    usuario_id = request.form['usuario_id']
+    cursor.execute("UPDATE Usuario SET rol = 'Administrador', solicitud_admin = 0 WHERE id_usuario = %s", (usuario_id,))
+    conexion.commit()
+    flash("El usuario fue promovido a Administrador.", "success")
+    return redirect(url_for('solicitudes_admin'))
+
 # -------------------- Ejecutar la app --------------------
 if __name__ == '__main__':
     print("Iniciando Flask...")
