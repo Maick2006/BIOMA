@@ -1,4 +1,4 @@
-print("\U0001F9EA Ejecutando app.py correctamente")
+print("Ejecutando app.py correctamente")
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mail import Mail, Message
@@ -10,6 +10,7 @@ import mysql.connector
 import os
 import bcrypt
 
+# -------------------- Configuración Inicial --------------------
 app = Flask(__name__)
 app.secret_key = Config.SECRET_KEY
 app.config.from_object(Config)
@@ -18,10 +19,12 @@ UPLOAD_FOLDER = 'static/perfiles'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# -------------------- Configuración de Mail y Serialización --------------------
 mail = Mail(app)
 serializer = URLSafeTimedSerializer(app.secret_key)
 
-print("📦 Configuración cargada:")
+# -------------------- Conexión a la base de datos --------------------
+print("Configuración cargada:")
 print("Host:", Config.MYSQL_HOST)
 print("Usuario:", Config.MYSQL_USER)
 print("Base de datos:", Config.MYSQL_DATABASE)
@@ -34,16 +37,19 @@ try:
         database=Config.MYSQL_DATABASE
     )
     cursor = conexion.cursor(dictionary=True)
-    print("✅ Conectado a la base de datos BIOMA")
+    print("Conectado a la base de datos BIOMA")
 except mysql.connector.Error as err:
-    print("❌ Error de conexión:", err)
+    print("Error de conexión:", err)
     exit()
 
+# -------------------- Utilidades --------------------
 def generar_hash(contraseña_plana):
     return bcrypt.hashpw(contraseña_plana.encode('utf-8'), bcrypt.gensalt())
 
 def verificar_contraseña(contraseña_plana, contraseña_hash):
     return bcrypt.checkpw(contraseña_plana.encode('utf-8'), contraseña_hash.encode('utf-8'))
+
+# Decoradores para roles y sesiones
 
 def login_required(f):
     @wraps(f)
@@ -72,6 +78,7 @@ def solo_superadmin(f):
         return f(*args, **kwargs)
     return decorada
 
+# -------------------- Autenticación --------------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -104,7 +111,6 @@ def register():
         return redirect(url_for('login'))
 
     contraseña_cifrada = generar_hash(contraseña).decode('utf-8')
-
     cursor.execute("""
         INSERT INTO Usuario (nombre, contraseña, correo, rol)
         VALUES (%s, %s, %s, %s)
@@ -113,6 +119,7 @@ def register():
     flash("Usuario registrado con éxito", "success")
     return redirect(url_for('login'))
 
+# -------------------- Recuperación de Contraseña --------------------
 @app.route('/recuperar', methods=['GET'])
 def recuperar_contraseña():
     return render_template('recuperar.html')
@@ -128,7 +135,6 @@ def solicitar_token():
 
     token = serializer.dumps(correo, salt='recuperar-clave')
     enlace = url_for('reset_password', token=token, _external=True)
-
     msg = Message("Recuperar contraseña BIOMA", recipients=[correo])
     msg.body = f"Haz clic en el siguiente enlace para cambiar tu contraseña: {enlace}"
 
@@ -157,11 +163,7 @@ def reset_password(token):
 
     return render_template('restablecer.html')
 
-@app.route('/')
-@login_required
-def home():
-    return render_template('index.html', usuario=session['usuario'])
-
+# -------------------- Perfil de Usuario --------------------
 @app.route('/perfil', methods=['GET', 'POST'])
 @login_required
 def perfil():
@@ -182,7 +184,6 @@ def perfil():
                 foto_actual = filename
 
         nueva_contraseña_cifrada = generar_hash(nueva_contraseña).decode('utf-8')
-
         cursor.execute("""
             UPDATE Usuario SET nombre=%s, contraseña=%s, correo=%s, foto=%s
             WHERE id_usuario=%s
@@ -194,6 +195,38 @@ def perfil():
 
     return render_template('perfil.html', user=user)
 
+@app.route('/eliminar_cuenta', methods=['POST'])
+@login_required
+def eliminar_cuenta():
+    usuario = session['usuario']
+    cursor.execute("SELECT id_usuario, foto FROM Usuario WHERE nombre = %s", (usuario,))
+    result = cursor.fetchone()
+
+    if result:
+        id_usuario = result['id_usuario']
+        foto = result.get('foto')
+
+        if foto and foto != 'img_avatar.png':
+            try:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], foto))
+            except FileNotFoundError:
+                pass
+
+        cursor.execute("DELETE FROM Usuario WHERE id_usuario = %s", (id_usuario,))
+        conexion.commit()
+        session.clear()
+        flash("Tu cuenta ha sido eliminada exitosamente.", "info")
+        return redirect(url_for('login'))
+    else:
+        flash("No se encontró el usuario.", "error")
+        return redirect(url_for('perfil'))
+
+# -------------------- Secciones del sitio --------------------
+@app.route('/')
+@login_required
+def home():
+    return render_template('index.html', usuario=session['usuario'])
+
 @app.route('/notificar')
 @login_required
 @solo_admin
@@ -203,9 +236,9 @@ def notificar():
                   body='Hola, este es un mensaje de prueba enviado desde BIOMA.')
     try:
         mail.send(msg)
-        return "✅ Correo enviado correctamente."
+        return "Correo enviado correctamente."
     except Exception as e:
-        return f"❌ Error al enviar correo: {e}"
+        return f"Error al enviar correo: {e}"
 
 @app.route('/plastico')
 @login_required
@@ -237,6 +270,12 @@ def ecotips():
 def recompensas():
     return render_template('recompensas.html')
 
+@app.route('/catalogo')
+@login_required
+def catalogo():
+    return render_template('catalogo.html')
+
+# -------------------- Ejecutar la app --------------------
 if __name__ == '__main__':
-    print("🚀 Iniciando Flask...")
+    print("Iniciando Flask...")
     app.run(debug=True)
