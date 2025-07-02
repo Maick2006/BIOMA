@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Recuperar contraseña - BIOMA</title>
+</head>
+<body>
+  <h2>¿Olvidaste tu contraseña?</h2>
+
+  <form method="POST" action="{{ url_for('solicitar_token') }}">
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" name="correo" id="correo" required>
+    <button type="submit">Enviar enlace</button>
+  </form>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</body>
+</html>

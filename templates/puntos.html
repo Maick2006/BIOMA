@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}Opiniones sobre BIOMA{% endblock %}
+
+{% block content %}
+<section class="feedback-header">
+  <h1>🗣️ Opiniones de la comunidad</h1>
+  <p>Comparte tu experiencia y califica cómo BIOMA ha impactado tu vida.</p>
+</section>
+
+<section class="feedback-form">
+  <form method="POST" action="{{ url_for('puntos') }}">
+    <label for="comentario">Tu experiencia</label>
+    <textarea name="comentario" rows="4" required placeholder="¿Cómo ha sido tu experiencia con BIOMA?"></textarea>
+
+    <label for="estrellas">Tu calificación</label>
+    <div class="rating">
+      {% for i in range(5, 0, -1) %}
+        <input type="radio" id="star{{ i }}" name="estrellas" value="{{ i }}" required>
+        <label for="star{{ i }}">⭐</label>
+      {% endfor %}
+    </div>
+
+    <button type="submit">📩 Enviar comentario</button>
+  </form>
+</section>
+
+<section class="feedback-list">
+  <h2>Comentarios recientes</h2>
+  {% if comentarios %}
+    {% for c in comentarios %}
+      <div class="comentario">
+        <p class="usuario">👤 {{ c.nombre_usuario }} <span class="fecha">{{ c.fecha.strftime("%d/%m/%Y") }}</span></p>
+        <div class="estrellas">
+          {% for i in range(1, 6) %}
+            <span class="estrella {% if i <= c.estrellas %}activa{% endif %}">★</span>
+          {% endfor %}
+        </div>
+        <p class="texto">“{{ c.texto }}”</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No hay comentarios aún.</p>
+  {% endif %}
+</section>
+
+<style>
+  .feedback-header {
+    text-align: center;
+    margin: 40px 20px 20px;
+  }
+
+  .feedback-header h1 {
+    font-size: 2.2em;
+    color: #2e7d32;
+  }
+
+  .feedback-header p {
+    color: #555;
+    font-size: 1.1em;
+  }
+
+  .feedback-form {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    background: #f1f8e9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .feedback-form textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    resize: none;
+  }
+
+  .rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .rating input[type="radio"] {
+    display: none;
+  }
+
+  .rating label {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .rating input:checked ~ label,
+  .rating label:hover,
+  .rating label:hover ~ label {
+    color: #fbc02d;
+  }
+
+  .feedback-form button {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .feedback-form button:hover {
+    background: #388e3c;
+  }
+
+  .feedback-list {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+
+  .comentario {
+    background: white;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  .usuario {
+    font-weight: bold;
+    color: #2e7d32;
+    margin-bottom: 5px;
+  }
+
+  .fecha {
+    font-weight: normal;
+    font-size: 0.9em;
+    color: #777;
+    margin-left: 10px;
+  }
+
+  .estrellas {
+    font-size: 1.3em;
+    margin: 5px 0 10px;
+  }
+
+  .estrella {
+    color: #ccc;
+  }
+
+  .estrella.activa {
+    color: #fbc02d;
+  }
+
+  .texto {
+    font-size: 1.05em;
+    color: #333;
+  }
+</style>
+{% endblock %}  

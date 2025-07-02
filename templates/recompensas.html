@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Recompensas - BIOMA{% endblock %}
+
+{% block content %}
+<!-- Carga Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<header class="subheader">
+  <h1>Recompensas por Reciclar</h1>
+  <p>Descubre los lugares donde puedes ganar premios reciclando tus residuos.</p>
+  <img src="{{ url_for('static', filename='images/recompensas.jpg') }}" alt="Recompensas por reciclar" class="seccion-img">
+</header>
+
+<section class="contenido">
+  <div id="mapa" style="height: 400px; border-radius: 15px; margin-bottom: 30px;"></div>
+
+  <div class="lugar">
+    <h3>🏟️ Movistar Arena</h3>
+    <p>📍 Calle 63 con Carrera 28, Teusaquillo</p>
+    <p>🎁 Canjea botellas PET por entradas a eventos o descuentos.</p>
+  </div>
+
+  <div class="lugar">
+    <h3>📦 EcoPunto</h3>
+    <p>📍 Calle 13 #45-67, Fontibón</p>
+    <p>🎁 Canje de papel, cartón y plástico por productos del hogar.</p>
+  </div>
+
+  <div class="lugar">
+    <h3>🏢 EcoNel</h3>
+    <p>📍 Autopistasur #54A-07, Venecia</p>
+    <p>🎁 Acumula puntos por entregar residuos, canjeables por recargas o productos.</p>
+  </div>
+
+  <div class="lugar">
+    <h3>🏘️ EcoAmbientales</h3>
+    <p>📍 Calle 161 #8g-89, San Cristóbal</p>
+    <p>🎁 Recompensas por kilos reciclados: productos escolares y kits ecológicos.</p>
+  </div>
+
+  <div class="lugar">
+    <h3>♻️ ARPPA</h3>
+    <p>📍 Calle 139 #96A-04, Suba</p>
+    <p>🎁 Intercambio de material reciclable por bonos y alimentos.</p>
+  </div>
+
+  <div class="lugar">
+    <h3>🛍️ Éxito</h3>
+    <p>📍 Cra 13 #52-31, Bogotá</p>
+    <p>🎁 Entrega de envases PET y latas por puntos Colombia.</p>
+  </div>
+
+  <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+</section>
+
+<script>
+  const mapa = L.map('mapa').setView([4.65, -74.1], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(mapa);
+
+  const puntos = [
+    { nombre: "Movistar Arena", coord: [4.6453, -74.0781], desc: "Entradas a eventos o descuentos." },
+    { nombre: "EcoPunto", coord: [4.6097, -74.1031], desc: "Canje por productos del hogar." },
+    { nombre: "EcoNel", coord: [4.5914, -74.1441], desc: "Puntos por reciclaje." },
+    { nombre: "EcoAmbientales", coord: [4.7592, -74.0304], desc: "Kits ecológicos por kilos reciclados." },
+    { nombre: "ARPPA", coord: [4.7406, -74.0867], desc: "Bonos y alimentos por reciclaje." },
+    { nombre: "Éxito", coord: [4.6345, -74.0684], desc: "Puntos Colombia por reciclaje." }
+  ];
+
+  puntos.forEach(p => {
+    L.marker(p.coord)
+      .addTo(mapa)
+      .bindPopup(`<b>${p.nombre}</b><br>${p.desc}`);
+  });
+</script>
+{% endblock %}

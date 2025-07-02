@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Inicio - BIOMA{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-content">
+    <h1>BIOMA</h1>
+    <p>Incentivamos el reciclaje para cuidar nuestro planeta 🌎</p>
+    <a href="{{ url_for('perfil') }}" class="hero-button">Comienza a reciclar</a>
+  </div>
+</section>
+
+<section class="info-section" id="quienes-somos">
+  <h2>¿Quiénes somos?</h2>
+  <p>BIOMA es una plataforma educativa y de acción ambiental enfocada en el reciclaje urbano en Bogotá. Buscamos concientizar, conectar y recompensar a los ciudadanos que quieren hacer del reciclaje un hábito diario.</p>
+</section>
+
+<section class="info-section alternate" id="problematicas">
+  <h2>¿Qué pasa si no reciclamos?</h2>
+  <p>En Bogotá, más del 70% de los residuos reciclables terminan en el relleno sanitario Doña Juana. No reciclar provoca acumulación de basura, contaminación del suelo y del aire, enfermedades respiratorias y daño a la biodiversidad.</p>
+</section>
+
+<section class="info-section" id="impacto">
+  <h2>Impacto del reciclaje en Bogotá</h2>
+  <p>Reciclar correctamente ayuda a reducir hasta un 30% la basura que llega a los rellenos. También fortalece la economía circular, mejora la calidad de vida de recicladores y disminuye la huella ecológica urbana.</p>
+</section>
+
+<section class="info-section alternate" id="mision">
+  <h2>Nuestra misión</h2>
+  <p>En BIOMA trabajamos para hacer del reciclaje una experiencia educativa, sencilla y motivadora. Queremos que cada ciudadano sepa qué, cómo y dónde reciclar, ¡y que sea premiado por hacerlo bien!</p>
+</section>
+
+<section class="cta">
+  <h3>🌱 Sé parte del cambio ambiental desde tu hogar</h3>
+  <a href="{{ url_for('perfil') }}" class="cta-button">Ir a mi perfil</a>
+</section>
+
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background-color: #f0fdf4;
+    color: #333;
+  }
+
+  .hero {
+    background: linear-gradient(120deg, #81c784, #a5d6a7);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .hero h1 {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+
+  .hero p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+  }
+
+  .hero-button {
+    background-color: white;
+    color: #388e3c;
+    padding: 14px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .hero-button:hover {
+    background-color: #e8f5e9;
+  }
+
+  .info-section {
+    max-width: 900px;
+    margin: 60px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+
+  .info-section:hover {
+    transform: scale(1.01);
+  }
+
+  .info-section h2 {
+    color: #2e7d32;
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+
+  .info-section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+  }
+
+  .alternate {
+    background-color: #f1f8e9;
+  }
+
+  .cta {
+    text-align: center;
+    padding: 60px 20px;
+    background: #c8e6c9;
+    border-top: 4px solid #66bb6a;
+    margin-top: 60px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .cta h3 {
+    font-size: 1.6em;
+    margin-bottom: 25px;
+    color: #2e7d32;
+  }
+
+  .cta-button {
+    background-color: #388e3c;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+
+  .cta-button:hover {
+    background-color: #2e7d32;
+  }
+</style>
+{% endblock %}

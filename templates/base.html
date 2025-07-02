@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}BIOMA - Recicla por un futuro mejor{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #a8e6cf, #dcedc1);
+    color: #333;
+    padding: 20px;
+  }
+
+  nav {
+    background-color: #2e7d32;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav li {
+    display: inline;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+
+  nav a:hover {
+    background-color: #66bb6a;
+  }
+
+  header,
+  .subheader {
+    text-align: center;
+    padding: 40px 0;
+    background-color: #ffecd2;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  header h1 {
+    font-size: 3rem;
+    color: #388e3c;
+  }
+
+  header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .logout-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+
+  .logout-btn:hover {
+    background-color: #d32f2f;
+  }
+
+  .servicios {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .servicio {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+
+  .servicio:hover {
+    transform: scale(1.05);
+  }
+
+  .servicio h2 {
+    color: #4caf50;
+    margin-bottom: 10px;
+  }
+
+  .servicio p {
+    color: #666;
+    margin-bottom: 15px;
+  }
+
+  .servicio a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #81c784;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  .servicio a:hover {
+    background-color: #66bb6a;
+  }
+
+  .contenido {
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    margin-top: 30px;
+  }
+
+  .contenido ul {
+    padding-left: 25px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+  }
+
+  .volver-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+
+  .volver-btn:hover {
+    background-color: #388e3c;
+  }
+
+  .seccion-img {
+    width: 100%;
+    max-width: 700px;
+    margin: 30px auto;
+    display: block;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  footer {
+    margin-top: 60px;
+    text-align: center;
+    color: #666;
+  }
+</style>
+
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="{{ url_for('home') }}">Inicio</a></li>
+    <li><a href="{{ url_for('plastico') }}">Plástico</a></li>
+    <li><a href="{{ url_for('papel') }}">Papel</a></li>
+    <li><a href="{{ url_for('carton') }}">Cartón</a></li>
+    <li><a href="{{ url_for('puntos') }}">Puntos de Reciclaje</a></li>
+    <li><a href="{{ url_for('ecotips') }}">Eco-Tips</a></li>
+    <li><a href="{{ url_for('recompensas') }}">Recompensas</a></li>
+    <li><a href="{{ url_for('perfil') }}">Mi Perfil</a></li> 
+    <li><a href="{{ url_for('logout') }}">Cerrar sesión</a></li>
+  </ul>
+</nav>
+
+  {% block content %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- PLÁSTICO -->
+{% extends "base.html" %}
+{% block title %}Plástico - BIOMA{% endblock %}
+{% block content %}
+  <header class="subheader">
+    <h1>Reciclaje de Plástico</h1>
+    <p>Aprende a separar y reutilizar plásticos para un mundo más limpio.</p>
+    <img src="{{ url_for('static', filename='images/plastico.jpg') }}" alt="Plástico reciclado" class="contenido-img">
+  </header>
+  <section class="contenido">
+    <ul>
+      <li>🧼 Lava y seca los envases antes de reciclar.</li>
+      <li>🧴 Separa plásticos duros como botellas de los blandos como bolsas.</li>
+      <li>🚫 Evita el uso de plástico de un solo uso.</li>
+    </ul>
+    <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+  </section>
+{% endblock %}

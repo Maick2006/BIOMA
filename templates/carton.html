@@ -1,0 +1,18 @@
+<!-- CARTÓN -->
+{% extends "base.html" %}
+{% block title %}Cartón - BIOMA{% endblock %}
+{% block content %}
+  <header class="subheader">
+    <h1>Reciclaje de Cartón</h1>
+    <p>Aprende a reciclar cajas y empaques de cartón correctamente.</p>
+    <img src="{{ url_for('static', filename='images/carton.jpg') }}" alt="Cartón reciclado" class="contenido-img">
+  </header>
+  <section class="contenido">
+    <ul>
+      <li>📦 Desarma las cajas antes de desecharlas.</li>
+      <li>🗑️ Evita mezclar cartón con residuos orgánicos.</li>
+      <li>📁 Reutiliza cajas para almacenamiento antes de reciclarlas.</li>
+    </ul>
+    <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+  </section>
+{% endblock %}
