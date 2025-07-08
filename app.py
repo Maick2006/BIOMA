@@ -428,3 +428,4 @@ def notificar():
 if __name__ == '__main__':
     print("🚀 Iniciando Flask...")
     app.run(debug=True)
+
