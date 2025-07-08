@@ -3,11 +3,14 @@
 {% block title %}Solicitudes de Administrador{% endblock %}
 
 {% block content %}
-<div class="contenido">
-  <h2 style="color:#388e3c; text-align:center; margin-bottom: 20px;">Solicitudes para ser Administrador</h2>
+<div class="contenido" style="max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+
+  <h2 style="color:#388e3c; text-align:center; margin-bottom: 30px;">
+    👮‍♂️ Solicitudes para ser Administrador
+  </h2>
 
   {% if solicitudes %}
-    <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+    <table style="width: 100%; border-collapse: collapse;">
       <thead>
         <tr style="background-color: #a5d6a7; color: #1b5e20;">
           <th style="padding: 10px; border: 1px solid #ccc;">ID</th>
@@ -18,26 +21,63 @@
       </thead>
       <tbody>
         {% for usuario in solicitudes %}
-        <tr>
-          <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.id_usuario }}</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.nombre }}</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.correo }}</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">
-            <form method="post" action="{{ url_for('aprobar_admin') }}">
-              <input type="hidden" name="usuario_id" value="{{ usuario.id_usuario }}">
-              <button type="submit" style="background-color:#4caf50; color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">
-                Aprobar
-              </button>
-            </form>
-          </td>
-        </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.id_usuario }}</td>
+            <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.nombre }}</td>
+            <td style="padding: 10px; border: 1px solid #ccc;">{{ usuario.correo }}</td>
+            <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">
+              <form method="post" action="{{ url_for('aprobar_admin') }}">
+                <input type="hidden" name="usuario_id" value="{{ usuario.id_usuario }}">
+                <button type="submit" class="btn-aprobar">
+                  ✅ Aprobar
+                </button>
+              </form>
+            </td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
   {% else %}
-    <p style="text-align:center; color:#555; margin-top:20px;">No hay solicitudes pendientes.</p>
+    <p style="text-align: center; color: #555; margin-top: 20px;">
+      No hay solicitudes pendientes.
+    </p>
   {% endif %}
 
-  <a href="{{ url_for('home') }}" class="volver-btn">← Volver al inicio</a>
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="{{ url_for('home') }}" class="volver-btn">← Volver al inicio</a>
+  </div>
 </div>
+
+<style>
+  .volver-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .volver-btn:hover {
+    background-color: #388e3c;
+  }
+
+  .btn-aprobar {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-aprobar:hover {
+    background-color: #388e3c;
+  }
+</style>
 {% endblock %}

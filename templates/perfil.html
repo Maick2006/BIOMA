@@ -37,18 +37,18 @@
     <button type="submit" onclick="return confirm('¿Estás seguro de eliminar tu cuenta?')" class="btn-danger">🗑 Eliminar Cuenta</button>
   </form>
 
-  <!-- Botón para solicitar ser administrador -->
-{% if session['rol'] == 'Reciclador' %}
-  {% if not user.solicitud_admin %}
-    <form method="POST" action="{{ url_for('solicitar_admin') }}" style="margin-top: 25px;">
-      <button type="submit" class="btn-admin">🛡 Solicitar ser Administrador</button>
-    </form>
-  {% else %}
-    <p style="margin-top: 25px; color: #777; text-align: center; font-weight: bold;">🕒 Ya solicitaste ser administrador. Espera aprobación.</p>
+  <!-- Verificación segura del rol -->
+  {% if session['usuario'] is mapping and session['usuario']['rol'] == 'Reciclador' %}
+    {% if not user.solicitud_admin %}
+      <form method="POST" action="{{ url_for('solicitar_admin') }}" style="margin-top: 25px;">
+        <button type="submit" class="btn-admin">🛡 Solicitar ser Administrador</button>
+      </form>
+    {% else %}
+      <p style="margin-top: 25px; color: #777; text-align: center; font-weight: bold;">🕒 Ya solicitaste ser administrador. Espera aprobación.</p>
+    {% endif %}
+  {% elif session['usuario'] is mapping and session['usuario']['rol'] == 'Administrador' %}
+    <p style="margin-top: 25px; color: #4CAF50; text-align: center; font-weight: bold;">✅ Ya eres administrador.</p>
   {% endif %}
-{% elif session['rol'] == 'Administrador' %}
-  <p style="margin-top: 25px; color: #4CAF50; text-align: center; font-weight: bold;">✅ Ya eres administrador.</p>
-{% endif %}
 
   <div style="text-align: center; margin-top: 20px;">
     <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>

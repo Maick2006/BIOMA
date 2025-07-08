@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}Catálogo de Recompensas - BIOMA{% endblock %}
+{% block content %}
+
+<style>
+  form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    background-color: #f0fff0;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  form input,
+  form button {
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  form input:focus {
+    outline: none;
+    border-color: #81c784;
+  }
+
+  form button {
+    background-color: #4caf50;
+    color: white;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s;
+  }
+
+  form button:hover {
+    background-color: #388e3c;
+  }
+
+  .tabla-recompensas {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    margin-top: 20px;
+  }
+
+  .tabla-recompensas th {
+    background-color: #2e7d32;
+    color: white;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .tabla-recompensas td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  .tabla-recompensas tr:hover {
+    background-color: #f1f8e9;
+  }
+
+  .tabla-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 0 3px;
+    display: inline-block;
+  }
+
+  .editar {
+    background-color: #ffa000;
+    color: white;
+  }
+
+  .editar:hover {
+    background-color: #fb8c00;
+  }
+
+  .eliminar {
+    background-color: #e53935;
+    color: white;
+  }
+
+  .eliminar:hover {
+    background-color: #c62828;
+  }
+
+  .volver-btn {
+    margin-top: 25px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: inline-block;
+  }
+
+  .volver-btn:hover {
+    background-color: #388e3c;
+  }
+</style>
+
+<header class="subheader">
+  <h1>🎁 Catálogo de Recompensas</h1>
+  <p>Consulta o administra las recompensas disponibles para los usuarios que reciclan.</p>
+</header>
+
+<section class="contenido">
+  {% set rol = session['usuario']['rol'] %}
+
+  {% if rol in ['Administrador', 'superAdministrador'] %}
+  <form method="POST" action="{{ url_for('agregar_recompensa') }}">
+    <input type="text" name="descripcion" placeholder="Descripción" required>
+    <input type="text" name="estado" placeholder="Estado (Ej: Activo)" required>
+    <input type="date" name="fecha_inicio" required>
+    <input type="date" name="fecha_final" required>
+    <input type="number" step="0.01" name="cantidad" placeholder="Cantidad" required>
+    <input type="number" name="id_clase" placeholder="ID Clase" required>
+    <input type="number" name="id_punto" placeholder="ID Punto" required>
+    <button type="submit">➕ Agregar Recompensa</button>
+  </form>
+  {% endif %}
+
+  <table class="tabla-recompensas">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Cantidad</th>
+        <th>ID Clase</th>
+        <th>ID Punto</th>
+        {% if rol in ['Administrador', 'superAdministrador'] %}
+        <th>Acciones</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in recompensas %}
+      <tr>
+        <td>{{ r.id_recompensa }}</td>
+        <td>{{ r.descripcion }}</td>
+        <td>{{ r.estado }}</td>
+        <td>{{ r.fecha_inicio }}</td>
+        <td>{{ r.fecha_final }}</td>
+        <td>{{ r.cantidad }}</td>
+        <td>{{ r.id_clase }}</td>
+        <td>{{ r.id_punto }}</td>
+        {% if rol in ['Administrador', 'superAdministrador'] %}
+        <td>
+          <a href="{{ url_for('editar_recompensa', id=r.id_recompensa) }}" class="tabla-btn editar">✏</a>
+          <a href="{{ url_for('eliminar_recompensa', id=r.id_recompensa) }}" class="tabla-btn eliminar" onclick="return confirm('¿Eliminar recompensa?')">🗑</a>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
+</section>
+
+{% endblock %}

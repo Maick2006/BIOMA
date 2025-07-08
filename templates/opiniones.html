@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}Opiniones - BIOMA{% endblock %}
+
+{% block content %}
+<style>
+    .opiniones-container {
+        max-width: 700px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .opiniones-container h2 {
+        text-align: center;
+        color: #2e7d32;
+        margin-bottom: 25px;
+    }
+
+    .estrellas-selector {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 15px 0;
+        font-size: 28px;
+    }
+
+    .estrellas-selector input[type="radio"] {
+        display: none;
+    }
+
+    .estrellas-selector label {
+        cursor: pointer;
+        color: #ccc;
+        transition: color 0.3s;
+    }
+
+    .estrellas-selector input[type="radio"]:checked ~ label,
+    .estrellas-selector input[type="radio"]:checked + label {
+        color: #fbc02d;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    button {
+        display: block;
+        margin: 0 auto;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #388e3c;
+    }
+
+    .comentario-box {
+        background-color: #f1f8e9;
+        border-left: 6px solid #81c784;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+    }
+
+    .comentario-box .estrellas {
+        margin-bottom: 5px;
+        color: #fbc02d;
+        font-size: 18px;
+    }
+
+    .comentario-box p {
+        margin: 0 0 5px 0;
+        font-size: 15px;
+    }
+
+    .comentario-box small {
+        color: #388e3c;
+        font-weight: bold;
+    }
+</style>
+
+<div class="opiniones-container">
+    <h2>Opiniones de los Recicladores</h2>
+
+    <form method="POST">
+        <div class="estrellas-selector">
+            {% for i in range(5, 0, -1) %}
+                <input type="radio" id="estrella{{ i }}" name="estrellas" value="{{ i }}" required>
+                <label for="estrella{{ i }}">&#9733;</label>
+            {% endfor %}
+        </div>
+
+        <textarea name="comentario" placeholder="Escribe tu opinión..." required></textarea>
+        <button type="submit">Publicar</button>
+    </form>
+
+    <hr style="margin: 30px 0;">
+
+    {% for comentario in comentarios %}
+        <div class="comentario-box">
+            <div class="estrellas">
+                {% for i in range(comentario.estrellas) %}
+                    &#9733;
+                {% endfor %}
+            </div>
+            <p>{{ comentario.texto }}</p>
+            <small>{{ comentario.nombre }} – {{ comentario.fecha.strftime('%d/%m/%Y %H:%M') }}</small>
+        </div>
+    {% else %}
+        <p style="text-align: center;">No hay opiniones todavía.</p>
+    {% endfor %}
+</div>
+{% endblock %}

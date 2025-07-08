@@ -1,24 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Recuperar contraseña - BIOMA</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recuperar Contraseña - BIOMA</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #a8e6cf, #dcedc1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+
+    input[type="email"] {
+      width: 90%;
+      padding: 10px;
+      margin: 15px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    .flash-message {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .flash-message.error {
+      background-color: #ffcdd2;
+      color: #b71c1c;
+    }
+
+    .flash-message.success {
+      background-color: #c8e6c9;
+      color: #1b5e20;
+    }
+
+    a {
+      display: block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #00796b;
+      font-size: 14px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h2>¿Olvidaste tu contraseña?</h2>
+  <div class="container">
+    <h2>¿Olvidaste tu contraseña?</h2>
+    <form method="POST" action="{{ url_for('solicitar_token') }}">
+      <input type="email" name="correo" placeholder="Correo electrónico" required>
+      <button type="submit">Enviar enlace</button>
+    </form>
 
-  <form method="POST" action="{{ url_for('solicitar_token') }}">
-    <label for="correo">Correo electrónico:</label>
-    <input type="email" name="correo" id="correo" required>
-    <button type="submit">Enviar enlace</button>
-  </form>
-
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% for category, message in messages %}
-        <p class="{{ category }}">{{ message }}</p>
+        <div class="flash-message {{ category }}">{{ message }}</div>
       {% endfor %}
-    {% endif %}
-  {% endwith %}
+    {% endwith %}
+
+    <a href="{{ url_for('login') }}">← Volver al inicio de sesión</a>
+  </div>
 </body>
 </html>

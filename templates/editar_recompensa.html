@@ -1,34 +1,58 @@
 {% extends "base.html" %}
+
 {% block title %}Editar Recompensa{% endblock %}
+
 {% block content %}
+<div class="contenido">
+  <h2 style="margin-bottom: 20px;">
+    <span style="font-size: 1.5em;">✏️</span> Editar Recompensa
+  </h2>
 
-<h2>✏️ Editar Recompensa</h2>
+  <form method="POST" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+    <div style="flex: 1 1 200px;">
+      <label>ID Clase:</label>
+      <input type="number" name="id_clase" value="{{ recompensa.id_clase }}" required class="input-edit">
+    </div>
 
-<form method="POST">
-  <label>ID Clase:</label>
-  <input type="number" name="id_clase" value="{{ recompensa.id_clase }}" required>
+    <div style="flex: 1 1 200px;">
+      <label>ID Punto:</label>
+      <input type="number" name="id_punto" value="{{ recompensa.id_punto }}" required class="input-edit">
+    </div>
 
-  <label>ID Punto:</label>
-  <input type="number" name="id_punto" value="{{ recompensa.id_punto }}" required>
+    <div style="flex: 2 1 300px;">
+      <label>Descripción:</label>
+      <input type="text" name="descripcion" value="{{ recompensa.descripcion }}" required class="input-edit">
+    </div>
 
-  <label>Descripción:</label>
-  <input type="text" name="descripcion" value="{{ recompensa.descripcion }}" required>
+    <div style="flex: 1 1 200px;">
+      <label>Estado:</label>
+      <input type="text" name="estado" value="{{ recompensa.estado }}" required class="input-edit">
+    </div>
 
-  <label>Estado:</label>
-  <input type="text" name="estado" value="{{ recompensa.estado }}" required>
+    <div style="flex: 1 1 200px;">
+      <label>Fecha Inicio:</label>
+      <input type="date" name="fecha_inicio" value="{{ recompensa.fecha_inicio }}" required class="input-edit">
+    </div>
 
-  <label>Fecha Inicio:</label>
-  <input type="date" name="fecha_inicio" value="{{ recompensa.fecha_inicio }}" required>
+    <div style="flex: 1 1 200px;">
+      <label>Fecha Final:</label>
+      <input type="date" name="fecha_final" value="{{ recompensa.fecha_final }}" required class="input-edit">
+    </div>
 
-  <label>Fecha Final:</label>
-  <input type="date" name="fecha_final" value="{{ recompensa.fecha_final }}" required>
+    <div style="flex: 1 1 200px;">
+      <label>Cantidad:</label>
+      <input type="number" name="cantidad" value="{{ recompensa.cantidad }}" required class="input-edit">
+    </div>
 
-  <label>Cantidad:</label>
-  <input type="number" step="0.01" name="cantidad" value="{{ recompensa.cantidad }}" required>
+    <div style="flex: 1 1 100%; margin-top: 10px;">
+      <button type="submit" style="padding: 10px 20px; background-color: #4caf50; color: white; border: none; border-radius: 8px; font-weight: bold;">
+        💾 Guardar Cambios
+      </button>
+    </div>
+  </form>
 
-  <button type="submit">💾 Guardar Cambios</button>
-</form>
-
-<a href="{{ url_for('catalogo') }}">← Volver al Catálogo</a>
-
+  <div style="margin-top: 20px;">
+    <a href="{{ url_for('catalogo') }}" class="volver-btn">← Volver al Catálogo</a>
+  </div>
+</div>
 {% endblock %}

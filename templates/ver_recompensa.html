@@ -1,40 +1,88 @@
 {% extends "base.html" %}
-
-{% block title %}Recompensas Disponibles - BIOMA{% endblock %}
-
+{% block title %}Catálogo de Recompensas - BIOMA{% endblock %}
 {% block content %}
+
+<style>
+  .tabla-recompensas {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    margin-top: 30px;
+  }
+
+  .tabla-recompensas th {
+    background-color: #2e7d32;
+    color: white;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .tabla-recompensas td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+  }
+
+  .tabla-recompensas tr:hover {
+    background-color: #f1f8e9;
+  }
+
+  .volver-btn {
+    margin-top: 25px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    display: inline-block;
+  }
+
+  .volver-btn:hover {
+    background-color: #388e3c;
+  }
+</style>
+
 <header class="subheader">
-  <h1>🎁 Recompensas Disponibles</h1>
-  <p>Aquí puedes ver las recompensas que puedes ganar por reciclar.</p>
+  <h1>🎁 Catálogo de Recompensas</h1>
+  <p>Consulta las recompensas disponibles por reciclar.</p>
 </header>
 
 <section class="contenido">
-  {% if recompensas %}
-    <table class="tabla-recompensas">
-      <thead>
-        <tr>
-          <th>Descripción</th>
-          <th>Estado</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Final</th>
-          <th>Cantidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for r in recompensas %}
-          <tr>
-            <td>{{ r.descripcion }}</td>
-            <td>{{ r.estado }}</td>
-            <td>{{ r.fecha_inicio }}</td>
-            <td>{{ r.fecha_final }}</td>
-            <td>{{ r.cantidad }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No hay recompensas disponibles en este momento.</p>
-  {% endif %}
+  <table class="tabla-recompensas">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Cantidad</th>
+        <th>ID Clase</th>
+        <th>ID Punto</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in recompensas %}
+      <tr>
+        <td>{{ r.id_recompensa }}</td>
+        <td>{{ r.descripcion }}</td>
+        <td>{{ r.estado }}</td>
+        <td>{{ r.fecha_inicio }}</td>
+        <td>{{ r.fecha_final }}</td>
+        <td>{{ r.cantidad }}</td>
+        <td>{{ r.id_clase }}</td>
+        <td>{{ r.id_punto }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
   <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
 </section>
-{% endblock %}
+
+{% endblock %}
