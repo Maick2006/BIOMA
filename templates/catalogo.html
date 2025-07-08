@@ -44,9 +44,15 @@
     border-collapse: collapse;
     background: white;
     border-radius: 15px;
-    overflow: hidden;
+    overflow-x: auto;
+    display: block;
     box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     margin-top: 20px;
+  }
+
+  .tabla-recompensas table {
+    width: 100%;
+    min-width: 800px;
   }
 
   .tabla-recompensas th {
@@ -108,6 +114,26 @@
   .volver-btn:hover {
     background-color: #388e3c;
   }
+
+  @media (max-width: 768px) {
+    .tabla-recompensas {
+      font-size: 14px;
+    }
+
+    .tabla-btn {
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+
+    form {
+      grid-template-columns: 1fr;
+    }
+
+    .volver-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
 </style>
 
 <header class="subheader">
@@ -131,43 +157,45 @@
   </form>
   {% endif %}
 
-  <table class="tabla-recompensas">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <th>Inicio</th>
-        <th>Fin</th>
-        <th>Cantidad</th>
-        <th>ID Clase</th>
-        <th>ID Punto</th>
-        {% if rol in ['Administrador', 'superAdministrador'] %}
-        <th>Acciones</th>
-        {% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for r in recompensas %}
-      <tr>
-        <td>{{ r.id_recompensa }}</td>
-        <td>{{ r.descripcion }}</td>
-        <td>{{ r.estado }}</td>
-        <td>{{ r.fecha_inicio }}</td>
-        <td>{{ r.fecha_final }}</td>
-        <td>{{ r.cantidad }}</td>
-        <td>{{ r.id_clase }}</td>
-        <td>{{ r.id_punto }}</td>
-        {% if rol in ['Administrador', 'superAdministrador'] %}
-        <td>
-          <a href="{{ url_for('editar_recompensa', id=r.id_recompensa) }}" class="tabla-btn editar">✏</a>
-          <a href="{{ url_for('eliminar_recompensa', id=r.id_recompensa) }}" class="tabla-btn eliminar" onclick="return confirm('¿Eliminar recompensa?')">🗑</a>
-        </td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="tabla-recompensas">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Cantidad</th>
+          <th>ID Clase</th>
+          <th>ID Punto</th>
+          {% if rol in ['Administrador', 'superAdministrador'] %}
+          <th>Acciones</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in recompensas %}
+        <tr>
+          <td>{{ r.id_recompensa }}</td>
+          <td>{{ r.descripcion }}</td>
+          <td>{{ r.estado }}</td>
+          <td>{{ r.fecha_inicio }}</td>
+          <td>{{ r.fecha_final }}</td>
+          <td>{{ r.cantidad }}</td>
+          <td>{{ r.id_clase }}</td>
+          <td>{{ r.id_punto }}</td>
+          {% if rol in ['Administrador', 'superAdministrador'] %}
+          <td>
+            <a href="{{ url_for('editar_recompensa', id=r.id_recompensa) }}" class="tabla-btn editar">✏</a>
+            <a href="{{ url_for('eliminar_recompensa', id=r.id_recompensa) }}" class="tabla-btn eliminar" onclick="return confirm('¿Eliminar recompensa?')">🗑</a>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   <a href="{{ url_for('home') }}" class="volver-btn">← Volver a BIOMA</a>
 </section>
